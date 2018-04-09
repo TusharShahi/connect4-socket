@@ -1,17 +1,17 @@
-/*var express = require('express');
+var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port=Number(process.env.PORT || 3000);
-*/
 
+/*
 var express = require('express');
 var app = express();
 var port=Number(process.env.PORT || 3000);
 
-var server = app.listen(port);
+var server = app.listen(3000);
 var io = require('socket.io').listen(server);
-
+*/
 
 
 
