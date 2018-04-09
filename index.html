@@ -1,0 +1,458 @@
+<!doctype html>  
+<html lang="en">  
+    <head>
+
+    </head>
+
+    <body>
+        <style type="text/css">
+            body
+            {
+                text-align: center;
+                background-color: #212121;
+            }
+            body > h1
+            {   margin-top: 100px; 
+                color: #fff;
+                font-family: monospace;
+            }
+            #playingarea
+            {   display: inline-block;
+                width: 600px;
+                margin-left: 200px;
+
+            }
+            #board
+            {
+                width: 600px;
+                margin: 0 auto;
+                display: inline-block;
+            }
+            #roomnumber
+            {   position: absolute;
+                left: 40px;
+                top: 400px;
+                background-color: gold;
+                width: 400px;
+                height: 100px;
+                display: inline-block;
+                text-align: center;
+                padding: 20px;
+            }
+            #roomnumber h1
+            {   margin: 0px;
+                font-size: 40px;
+            }
+                        #opponentname
+            {   position: absolute;
+                left: 40px;
+                top: 200px;
+                background-color: gold;
+                width: 400px;
+                height: 100px;
+                display: inline-block;
+                text-align: center;
+                padding: 20px;
+            }
+            #opponentname h1
+            {   margin: 0px;
+                font-size: 40px;
+            }
+            #leave
+            {
+                background-color: gold;
+                position: absolute;
+                left: 40px;
+                width: 400px;
+                height: 20px;
+                top: 50px;
+                padding: 20px;
+                font-size: 20px;
+                font-family: monospace;
+            }
+
+            #leave:hover
+            {
+                cursor: pointer;
+            }
+            #box
+            {
+                width: 300px; 
+                background-color: #222;
+                color: #fff;
+            }
+
+            #droprow
+            {
+                width: 80%;
+                margin: 0 auto;
+                text-align: center;
+            }
+            #droprow div
+            {
+                width: 20px;
+                display: inline-block;
+                height: 20px;
+                margin: 10px;
+                border-radius: 50%;
+                background-color: #000;
+            }
+            #board
+            {
+                width: 80%;
+            }
+            .row
+            {
+                margin: 10px 0px;
+            }
+            .row > div
+            {
+                width: 20px;
+                border-radius: 50%;
+                border: 0px;
+                margin: 10px;
+                background-color: #ccc;   
+            }
+            #color div
+            {
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                
+
+            }
+            #color div:hover
+            {
+                cursor: pointer;
+            }
+            #color
+            {   text-align: center;
+                margin: 10px;
+
+            }
+        
+            #board>div>div
+            {
+                display: inline-block;
+                height: 20px;
+            }
+
+
+        </style>
+        
+        <h1>CONNECT - 4</h1>
+        
+        <div id="gamestart">
+            
+        </div>
+        <div id="color">
+
+            <div id="tomato" style="background-color: tomato;">
+            </div>
+
+            <div id="blue" style="background-color: blue;">
+            </div>
+
+        </div>
+          <div id="roomnumber">
+        
+
+    </div>
+
+    <div id="leave" onclick="dis();">
+        LEAVE
+    </div>    
+
+    <div id="playingarea">
+
+        <div id="droprow">
+
+            <div onclick = "drop(this);" id="one"></div>
+            <div onclick = "drop(this);" id="two"></div>
+            <div onclick = "drop(this);" id="three"></div>
+            <div onclick = "drop(this);" id="four"></div>
+            <div onclick = "drop(this);" id="five"></div>
+            <div onclick = "drop(this);" id="six"></div>
+                
+        
+
+        </div>
+
+        <div id="board">
+
+            <div class="row">
+
+                <div class="one"></div>
+                <div class="two"></div>
+                <div class="three"></div>
+                <div class="four"></div>
+                <div class="five"></div>
+                <div class="six"></div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="one"></div>
+                <div class="two"></div>
+                <div class="three"></div>
+                <div class="four"></div>
+                <div class="five"></div>
+                <div class="six"></div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="one"></div>
+                <div class="two"></div>
+                <div class="three"></div>
+                <div class="four"></div>
+                <div class="five"></div>
+                <div class="six"></div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="one"></div>
+                <div class="two"></div>
+                <div class="three"></div>
+                <div class="four"></div>
+                <div class="five"></div>
+                <div class="six"></div>
+
+            </div>
+            <div class="row">
+
+                <div class="one"></div>
+                <div class="two"></div>
+                <div class="three"></div>
+                <div class="four"></div>
+                <div class="five"></div>
+                <div class="six"></div>
+
+            </div>
+            <div class="row">
+
+                <div class="one"></div>
+                <div class="two"></div>
+                <div class="three"></div>
+                <div class="four"></div>
+                <div class="five"></div>
+                <div class="six"></div>
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+    </div>
+
+ 
+    <div id="joinroom">
+
+        <input type="text" name="enterroom" id="enterroom">
+        <input type="button" value="join" onclick="join();">
+        
+    </div>
+
+    <div id="opponentname">
+        
+
+
+    </div>
+
+
+    <script src="/jquery/dist/jquery.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+
+        <script>  
+
+
+var socket = io.connect('http://localhost:4200');
+ 
+var gamestart = 0;
+var chance = 0;
+
+var lockjoin = 0;
+var num=0;
+var color;
+function dis()
+{
+    console.log("yooooo");
+    socket.emit('leave');
+}
+ function join()
+ {
+if(!lockjoin)
+{
+     roomname = document.getElementById('enterroom').value;
+     console.log(roomname);
+     if(roomname == null||roomname == ""||roomname == undefined)
+     {  color = 'tomato';
+        data = {color: color};
+        socket.emit('create',data);
+        num = 1;
+    }
+     else
+     {         console.log(roomname);  
+            color = 'blue';
+         data = {roomname : roomname, color: color};
+             socket.emit('create',data);
+        num = 2;
+        }
+ }
+}
+
+
+ function press(x)
+ {
+    x.innerHTML += 'X';
+
+ }
+
+function drop(element)
+{
+    if(gamestart == 1)
+    {
+
+if(chance == 1)
+{
+   chance = 0;
+   socket.emit("drop",element.id); 
+   socket.emit("passturn"); 
+}
+else
+{
+    alert('NOT YOUR TURN');
+}
+}
+else alert('GAME HAS NOT STARTED');
+}
+
+
+
+ socket.on('connect', function(data) {
+    socket.emit('join', 'Hello World from client');
+  //  socket.emit('create');   
+ });
+
+ socket.on('roomcreated',function(data)
+ {
+    document.getElementById('roomnumber').innerHTML += '<h1> ROOM NUMBER : ' + data + '</h1>'; 
+    lockjoin = 1;
+ });
+
+ socket.on('roomfull',function()
+ {
+    alert('room full nigga');
+ });
+
+ socket.on('opponentname',function(name)
+ {    
+    document.getElementById('opponentname').innerHTML += '<h1> YOU ARE PLAYING WITH ' + name + '</h1>';
+
+ });
+
+  nameentered = 0;
+ socket.on('opponenthasjoined',function(name)
+ {
+   if(nameentered==0)
+    {   console.log("reached");
+        nameentered = 1; 
+        document.getElementById('opponentname').innerHTML += '<h1> YOUR ARE PLAYING WITH ' + name + '</h1>';
+        socket.emit('sendname');
+    }
+ });
+
+ socket.on('fill',function(row,column,color,number)
+ {
+
+    data = {column : column, player : number}; 
+    console.log(data);
+    socket.emit('update',data);
+    console.log("fill");
+    console.log(row);
+    console.log(column);
+    console.log(color);
+    console.log(document.getElementById("board"));
+
+switch(column)
+{
+    case 0 : //console.log(document.querySelectorAll(".row")[row].querySelectorAll(".one")[0]);   
+            document.querySelectorAll(".row")[row].querySelectorAll(".one")[0].style.backgroundColor = color;
+        //console.log( document.querySelectorAll(".row")[row].querySelectorAll(".one"));
+        break;
+
+    case 1 : document.querySelectorAll(".row")[row].querySelectorAll(".two")[0].style.backgroundColor = color;
+        break;
+
+    case 2 : document.querySelectorAll(".row")[row].querySelectorAll(".three")[0].style.backgroundColor = color;
+        break;
+
+    case 3 : document.querySelectorAll(".row")[row].querySelectorAll(".four")[0].style.backgroundColor = color;
+        break;
+
+    case 4 : document.querySelectorAll(".row")[row].querySelectorAll(".five")[0].style.backgroundColor = color;
+        break;
+
+    case 5 : //console.log(document.querySelectorAll(".row")[row].querySelectorAll(".six"));  
+            document.querySelectorAll(".row")[row].querySelectorAll(".six")[0].style.backgroundColor = color;
+        break;
+
+}
+ });
+
+ 
+
+ socket.on('startgame',function()
+ {
+    console.log("Call this function");
+    gamestart = 1;
+    document.getElementById('gamestart').innerHTML += "GAME HAS STARTED";
+
+    var list = document.getElementById('droprow').getElementsByTagName('div');
+    console.log(color);
+    for(i=0;i<6;i++)
+    {
+        list[i].style.backgroundColor = color;
+    }
+
+}); 
+
+ socket.on('yourturn',function()
+ {
+    console.log("my turn");
+    chance = 1;
+ 
+ });
+
+ socket.on("udpate",function(a)
+ {  
+    console.log("updaaate");
+    console.log("a " + a);
+    client.emit('update',a);
+ 
+ });
+
+ socket.on("victory",function(a)
+ {
+    alert("PLAYER " + a + " has won");
+
+ });
+
+ socket.on("opponentdisconnect",function()
+ {
+alert("Your opponenct has disconnected");
+ });
+
+    </script>  
+
+    </body>
+</html> 
