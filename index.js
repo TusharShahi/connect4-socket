@@ -103,13 +103,16 @@ io.on('connection', function(client) {
 	client.on('disconnect',function()
 	{
 		console.log("disconnect");
-		client.broadcast.emit('opponentdisconnect');
+//		client.broadcast.emit('opponentdisconnect');
+		client.to(client.gameroom).emit('opponentdisconnect');
+
 	});
 
 
 	client.on('leave',function()
-	{  	client.broadcast.emit('opponentdisconnect');
-	
+	{  	
+//		client.broadcast.emit('opponentdisconnect');
+		client.to(client.gameroom).emit('opponentdisconnect');	
 		client.disconnect();
 	});
     
